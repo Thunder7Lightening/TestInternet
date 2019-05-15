@@ -3,6 +3,7 @@
     package="tw.edu.ntut.sdtlab.crawler.testapp.testinternet">
 
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
     <application
         android:allowBackup="true"
