@@ -1,23 +1,13 @@
 package tw.edu.ntut.sdtlab.crawler.testapp.testinternet;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -27,33 +17,20 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class MainActivity extends AppCompatActivity {
-//    private ProgressDialog progressDialog;
+public class FailureActivity extends AppCompatActivity {
+
+    //    private ProgressDialog progressDialog;
     private Bitmap bitmap = null;
-    private Button nextPageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        nextPageButton = (Button) findViewById(R.id.nextPageButton);
-        nextPageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToNextPage();
-            }
-        });
+        setContentView(R.layout.activity_failure);
 
         String[] urlStrs = new String[] {"http://www.tutorialspoint.com/green/images/logo.png",
                 "https://yt3.ggpht.com/a/AGF-l7_oYC9CmWYaF2AX56gvmKUfjk9s_bThHHIUmA=s900-mo-c-c0xffffffff-rj-k-no"};
         checkInternetConenction();
         downloadImage(urlStrs);
-    }
-
-    private void goToNextPage() {
-        Intent intent = new Intent(this, FailureActivity.class);
-        startActivity(intent);
     }
 
     private void downloadImage(final String[] urlStrs) {
@@ -71,16 +48,12 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
                         in = openHttpConnection(url);
-
-                        // todo
-                        if (in == null) throw new NullPointerException();
-
                         bitmap = BitmapFactory.decodeStream(in);
                         Bundle b = new Bundle();
                         b.putParcelable("bitmap", bitmap);
                         msg.setData(b);
                         in.close();
-                    }catch (IOException | NullPointerException e1) {
+                    }catch (IOException e1) {
                         e1.printStackTrace();
                     }
                     messageHandler.sendMessage(msg);
@@ -157,4 +130,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
 }
