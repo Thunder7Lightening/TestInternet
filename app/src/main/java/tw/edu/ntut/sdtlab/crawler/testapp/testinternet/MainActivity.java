@@ -1,23 +1,16 @@
 package tw.edu.ntut.sdtlab.crawler.testapp.testinternet;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -26,44 +19,60 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 //    private ProgressDialog progressDialog;
     private Bitmap bitmap = null;
-    private Button nextPageButton;
+    private Button crashPageButton, anomalyPageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        nextPageButton = (Button) findViewById(R.id.nextPageButton);
-        nextPageButton.setOnClickListener(new View.OnClickListener() {
+        crashPageButton = (Button) findViewById(R.id.crashPageButton);
+        crashPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToNextPage();
+                goToCrashPage();
+            }
+        });
+        anomalyPageButton = (Button) findViewById(R.id.anomalyPageButton);
+        anomalyPageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoAnomalyPage();
             }
         });
 
-        String[] urlStrs = new String[] {"http://www.tutorialspoint.com/green/images/logo.png",
-                "https://yt3.ggpht.com/a/AGF-l7_oYC9CmWYaF2AX56gvmKUfjk9s_bThHHIUmA=s900-mo-c-c0xffffffff-rj-k-no"};
+        List<String> urlStrs = new ArrayList<>();
+//        urlStrs.add("http://www.tutorialspoint.com/green/images/logo.png");
+        urlStrs.add("https://yt3.ggpht.com/a/AGF-l7_oYC9CmWYaF2AX56gvmKUfjk9s_bThHHIUmA=s900-mo-c-c0xffffffff-rj-k-no");
+
         checkInternetConenction();
         downloadImage(urlStrs);
     }
 
-    private void goToNextPage() {
-        Intent intent = new Intent(this, FailureActivity.class);
+    private void goToCrashPage() {
+        Intent intent = new Intent(this, CrashActivity.class);
         startActivity(intent);
     }
 
-    private void downloadImage(final String[] urlStrs) {
+    private void gotoAnomalyPage() {
+        Intent intent = new Intent(this, AnomalyActivity.class);
+        startActivity(intent);
+    }
+
+    private void downloadImage(final List<String> urlStrs) {
 //        progressDialog = ProgressDialog.show(this, "", "Downloading Image from " + urlStrs[0]);
 
         new Thread() {
             public void run() {
                 int i = 0;
                 while(true){
-                    String url = urlStrs[i];
+                    String url = urlStrs.get(i);
                     InputStream in = null;
 
                     Message msg = Message.obtain();
@@ -71,10 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
                         in = openHttpConnection(url);
-
-                        // todo
-                        if (in == null) throw new NullPointerException();
-
                         bitmap = BitmapFactory.decodeStream(in);
                         Bundle b = new Bundle();
                         b.putParcelable("bitmap", bitmap);
@@ -85,8 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     messageHandler.sendMessage(msg);
 
-
-                    i = (i == 0) ? 1 : 0;
+                    i = (i < urlStrs.size() - 1) ? i + 1 : 0;
                 }
 
             }
