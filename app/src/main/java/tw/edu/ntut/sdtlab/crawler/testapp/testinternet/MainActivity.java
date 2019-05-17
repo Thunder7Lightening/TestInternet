@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 //        urlStrs.add("http://www.tutorialspoint.com/green/images/logo.png");
         urlStrs.add("https://yt3.ggpht.com/a/AGF-l7_oYC9CmWYaF2AX56gvmKUfjk9s_bThHHIUmA=s900-mo-c-c0xffffffff-rj-k-no");
 
-        checkInternetConenction();
+        checkInternetConnection();
         downloadImage(urlStrs);
     }
 
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private boolean checkInternetConenction() {
+    private boolean checkInternetConnection() {
         // get Connectivity Manager object to check connection
         ConnectivityManager connec
                 =(ConnectivityManager)getSystemService(getBaseContext().CONNECTIVITY_SERVICE);
