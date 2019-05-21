@@ -64,25 +64,21 @@ public class MainActivity extends AppCompatActivity {
                 int i = 0;
                 while(true){
                     String url = urlStrs[i];
-                    InputStream in = null;
+                    InputStream in;
 
                     Message msg = Message.obtain();
                     msg.what = 1;
 
                     try {
                         in = openHttpConnection(url);
-
-                        // todo
-                        if (in == null) throw new NullPointerException();
-
                         bitmap = BitmapFactory.decodeStream(in);
-                        Bundle b = new Bundle();
-                        b.putParcelable("bitmap", bitmap);
-                        msg.setData(b);
                         in.close();
                     }catch (IOException | NullPointerException e1) {
                         e1.printStackTrace();
                     }
+                    Bundle b = new Bundle();
+                    b.putParcelable("bitmap", bitmap);
+                    msg.setData(b);
                     messageHandler.sendMessage(msg);
 
 
