@@ -27,20 +27,18 @@ public class FailureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_failure);
 
-        String[] urlStrs = new String[] {"http://www.tutorialspoint.com/green/images/logo.png",
-                "https://yt3.ggpht.com/a/AGF-l7_oYC9CmWYaF2AX56gvmKUfjk9s_bThHHIUmA=s900-mo-c-c0xffffffff-rj-k-no"};
+        String urlStr = "https://yt3.ggpht.com/a/AGF-l7_oYC9CmWYaF2AX56gvmKUfjk9s_bThHHIUmA=s900-mo-c-c0xffffffff-rj-k-no";
         checkInternetConenction();
-        downloadImage(urlStrs);
+        downloadImage(urlStr);
     }
 
-    private void downloadImage(final String[] urlStrs) {
-//        progressDialog = ProgressDialog.show(this, "", "Downloading Image from " + urlStrs[0]);
+    private void downloadImage(final String urlStr) {
+//        progressDialog = ProgressDialog.show(this, "", "Downloading Image from " + urlStr[0]);
 
         new Thread() {
             public void run() {
-                int i = 0;
                 while(true){
-                    String url = urlStrs[i];
+                    String url = urlStr;
                     InputStream in = null;
 
                     Message msg = Message.obtain();
@@ -57,9 +55,6 @@ public class FailureActivity extends AppCompatActivity {
                         e1.printStackTrace();
                     }
                     messageHandler.sendMessage(msg);
-
-
-                    i = (i == 0) ? 1 : 0;
                 }
 
             }
