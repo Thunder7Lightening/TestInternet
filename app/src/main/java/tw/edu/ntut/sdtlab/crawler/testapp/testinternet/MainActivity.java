@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     InputStream in;
 
                     Message msg = Message.obtain();
-                    msg.what = 1;
+//                    msg.what = 1;
 
                     try {
                         in = openHttpConnection(url);

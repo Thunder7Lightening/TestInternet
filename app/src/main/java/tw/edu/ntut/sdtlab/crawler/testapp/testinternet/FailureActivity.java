@@ -44,7 +44,7 @@ public class FailureActivity extends AppCompatActivity {
                     InputStream in = null;
 
                     Message msg = Message.obtain();
-                    msg.what = 1;
+//                    msg.what = 1;
 
                     try {
                         in = openHttpConnection(url);
