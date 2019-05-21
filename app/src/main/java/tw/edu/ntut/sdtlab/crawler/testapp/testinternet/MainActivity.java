@@ -29,8 +29,11 @@ import java.net.URLConnection;
 
 public class MainActivity extends AppCompatActivity {
 //    private ProgressDialog progressDialog;
-    private Bitmap bitmap = null;
     private Button nextPageButton;
+
+    private Bitmap bitmap = null;
+    private Thread firstPagethread;
+    private boolean shouldThreadKeepRunning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +47,6 @@ public class MainActivity extends AppCompatActivity {
                 goToNextPage();
             }
         });
-
-        String urlStr = "https://yt3.ggpht.com/a/AGF-l7_oYC9CmWYaF2AX56gvmKUfjk9s_bThHHIUmA=s900-mo-c-c0xffffffff-rj-k-no";
-        checkInternetConenction();
-        downloadImage(urlStr);
     }
 
     private void goToNextPage() {
@@ -55,12 +54,21 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        shouldThreadKeepRunning = true;
+        String urlStr = "https://yt3.ggpht.com/a/AGF-l7_oYC9CmWYaF2AX56gvmKUfjk9s_bThHHIUmA=s900-mo-c-c0xffffffff-rj-k-no";
+        checkInternetConenction();
+        downloadImage(urlStr);
+    }
+
     private void downloadImage(final String urlStr) {
 //        progressDialog = ProgressDialog.show(this, "", "Downloading Image from " + urlStrs[0]);
 
-        new Thread() {
+        firstPagethread = new Thread() {
             public void run() {
-                while(true){
+                while(shouldThreadKeepRunning){
                     String url = urlStr;
                     InputStream in;
 
@@ -81,7 +89,15 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
-        }.start();
+        };
+
+        firstPagethread.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        shouldThreadKeepRunning = false;
     }
 
     private InputStream openHttpConnection(String urlStr) {

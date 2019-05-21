@@ -21,12 +21,19 @@ public class FailureActivity extends AppCompatActivity {
 
     //    private ProgressDialog progressDialog;
     private Bitmap bitmap = null;
+    private Thread secondPagethread;
+    private boolean shouldThreadKeepRunning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_failure);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        shouldThreadKeepRunning = true;
         String urlStr = "https://yt3.ggpht.com/a/AGF-l7_oYC9CmWYaF2AX56gvmKUfjk9s_bThHHIUmA=s900-mo-c-c0xffffffff-rj-k-no";
         checkInternetConenction();
         downloadImage(urlStr);
@@ -35,9 +42,9 @@ public class FailureActivity extends AppCompatActivity {
     private void downloadImage(final String urlStr) {
 //        progressDialog = ProgressDialog.show(this, "", "Downloading Image from " + urlStr[0]);
 
-        new Thread() {
+        secondPagethread = new Thread() {
             public void run() {
-                while(true){
+                while(shouldThreadKeepRunning){
                     String url = urlStr;
                     InputStream in = null;
 
@@ -58,7 +65,15 @@ public class FailureActivity extends AppCompatActivity {
                 }
 
             }
-        }.start();
+        };
+
+        secondPagethread.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        shouldThreadKeepRunning = false;
     }
 
     private InputStream openHttpConnection(String urlStr) {
