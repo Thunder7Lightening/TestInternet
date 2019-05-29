@@ -116,7 +116,7 @@ public class FailureActivity extends AppCompatActivity {
 //            img.setImageBitmap((Bitmap) (msg.getData().getParcelable("bitmap")));
 
             textViewInFailureActivity = (TextView) findViewById(R.id.textViewInFailureActivity);
-            textViewInFailureActivity.setText((bitmap == null) ? "Internet Not Connected" : "Internet Connect");
+            textViewInFailureActivity.setText((bitmap == null) ? "Internet Access Failure" : "Internet Access Success");
 
 //            progressDialog.dismiss();
         }

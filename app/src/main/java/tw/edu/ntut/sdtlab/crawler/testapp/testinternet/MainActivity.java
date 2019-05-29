@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
 //            img.setImageBitmap((Bitmap) (msg.getData().getParcelable("bitmap")));
 
             textViewInMainActivity = (TextView) findViewById(R.id.textViewInMainActivity);
-            textViewInMainActivity.setText((bitmap == null) ? "Internet Not Connected" : "Internet Connect");
+            textViewInMainActivity.setText((bitmap == null) ? "Internet Access Failure" : "Internet Access Success");
 
 //            progressDialog.dismiss();
         }
