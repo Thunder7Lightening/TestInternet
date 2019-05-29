@@ -54,13 +54,13 @@ public class FailureActivity extends AppCompatActivity {
                     try {
                         in = openHttpConnection(url);
                         bitmap = BitmapFactory.decodeStream(in);
-                        Bundle b = new Bundle();
-                        b.putParcelable("bitmap", bitmap);
-                        msg.setData(b);
                         in.close();
                     }catch (IOException e1) {
                         e1.printStackTrace();
                     }
+                    Bundle b = new Bundle();
+                    b.putParcelable("bitmap", bitmap);
+                    msg.setData(b);
                     messageHandler.sendMessage(msg);
                 }
 
