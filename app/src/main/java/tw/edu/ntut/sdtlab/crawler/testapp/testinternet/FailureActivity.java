@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -18,6 +19,8 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class FailureActivity extends AppCompatActivity {
+
+    private TextView textViewInFailureActivity;
 
     //    private ProgressDialog progressDialog;
     private Bitmap bitmap = null;
@@ -35,7 +38,7 @@ public class FailureActivity extends AppCompatActivity {
         super.onStart();
         shouldThreadKeepRunning = true;
         String urlStr = "https://yt3.ggpht.com/a/AGF-l7_oYC9CmWYaF2AX56gvmKUfjk9s_bThHHIUmA=s900-mo-c-c0xffffffff-rj-k-no";
-        checkInternetConenction();
+//        checkInternetConenction();
         downloadImage(urlStr);
     }
 
@@ -109,8 +112,12 @@ public class FailureActivity extends AppCompatActivity {
     private Handler messageHandler = new Handler() {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            ImageView img = (ImageView) findViewById(R.id.imageView);
-            img.setImageBitmap((Bitmap) (msg.getData().getParcelable("bitmap")));
+//            ImageView img = (ImageView) findViewById(R.id.imageView);
+//            img.setImageBitmap((Bitmap) (msg.getData().getParcelable("bitmap")));
+
+            textViewInFailureActivity = (TextView) findViewById(R.id.textViewInFailureActivity);
+            textViewInFailureActivity.setText((bitmap == null) ? "Internet Not Connected" : "Internet Connect");
+
 //            progressDialog.dismiss();
         }
     };

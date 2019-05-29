@@ -18,7 +18,10 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +33,7 @@ import java.net.URLConnection;
 public class MainActivity extends AppCompatActivity {
 //    private ProgressDialog progressDialog;
     private Button nextPageButton;
+    private TextView textViewInMainActivity;
 
     private Bitmap bitmap = null;
     private Thread firstPagethread;
@@ -59,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         shouldThreadKeepRunning = true;
         String urlStr = "https://yt3.ggpht.com/a/AGF-l7_oYC9CmWYaF2AX56gvmKUfjk9s_bThHHIUmA=s900-mo-c-c0xffffffff-rj-k-no";
-        checkInternetConenction();
+//        checkInternetConenction();
         downloadImage(urlStr);
     }
 
@@ -133,8 +137,12 @@ public class MainActivity extends AppCompatActivity {
     private Handler messageHandler = new Handler() {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            ImageView img = (ImageView) findViewById(R.id.imageView);
-            img.setImageBitmap((Bitmap) (msg.getData().getParcelable("bitmap")));
+//            ImageView img = (ImageView) findViewById(R.id.imageView);
+//            img.setImageBitmap((Bitmap) (msg.getData().getParcelable("bitmap")));
+
+            textViewInMainActivity = (TextView) findViewById(R.id.textViewInMainActivity);
+            textViewInMainActivity.setText((bitmap == null) ? "Internet Not Connected" : "Internet Connect");
+
 //            progressDialog.dismiss();
         }
     };
