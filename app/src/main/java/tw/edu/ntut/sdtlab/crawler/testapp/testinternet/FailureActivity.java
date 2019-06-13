@@ -65,6 +65,12 @@ public class FailureActivity extends AppCompatActivity {
                     b.putParcelable("bitmap", bitmap);
                     msg.setData(b);
                     messageHandler.sendMessage(msg);
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
 
             }
