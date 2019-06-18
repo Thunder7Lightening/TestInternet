@@ -39,7 +39,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="272dp"
-        android:text="\tWhen Next Page is clicked, the app will invoke a new activity that accesses the Internet.\n\tIf the Internet is not available, the app will crash."
+        android:text=" When Next Page is clicked, the app will invoke a new activity that accesses the Internet. If the Internet is not available, the app will crash."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
